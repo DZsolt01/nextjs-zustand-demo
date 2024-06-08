@@ -1,21 +1,41 @@
 "use client";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Advertisement from "../Advertisment/Advertisement";
-import businessCard from "./businessCardc";
+import useAdvertisementStyle from "@/lib/hooks/useAdvertisementStyle";
+import { useAdvertisementStore } from "@/providers/advertisement.store.provider";
+import getBusinessCards from "@/lib/actions/getBusinessCards";
+import { BusinessCardProps } from "./businessCardc";
 
-const BusinessCardWrapper = () => {
-  const advertisementIndexes = [3, 7]; // Will be chaned to dynamic - API
-  //Index passed to Advertisement will be changed later, just demo
+const BusinessCardWrapper = ({
+  businessCards,
+}: {
+  businessCards: BusinessCardProps[];
+}) => {
+  const { advertisements, nextAdvertisment, incrementAdvertisement } =
+    useAdvertisementStore((state) => state);
+  const [index, setIndex] = useState(nextAdvertisment);
+
+  const advertisementIndexes = useMemo(() => {
+    return [3, 7];
+  }, []);
+  useEffect(() => {
+    setIndex((prev) => prev + 1);
+    incrementAdvertisement();
+  }, [advertisementIndexes, incrementAdvertisement]);
+
   return (
     <>
       <div className="grid auto-rows-[150px] grid-cols-5 gap-4 p-4">
-        {businessCard.map((card, index) => (
-          <React.Fragment key={index}>
-            {advertisementIndexes.includes(index) && (
-              <Advertisement key={`adv-${index}`} index={index === 3 ? 0 : 1} />
+        {businessCards.map((card, mIndex) => (
+          <React.Fragment key={mIndex}>
+            {advertisementIndexes.includes(mIndex) && (
+              <Advertisement
+                key={`adv-${mIndex}`}
+                advertisement={advertisements[index]}
+              />
             )}
             <div
-              key={`card-${index}`}
+              key={`card-${mIndex}`}
               className={`flex rounded-lg bg-neutral-500`}
             >
               {card.title}

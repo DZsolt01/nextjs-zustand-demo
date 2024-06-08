@@ -1,24 +1,25 @@
 "use client";
-
 import { AdvertisementProps } from "@/components/Advertisment/types";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useEffect } from "react";
 
 export default function useAdvertisementStyle(
-  advertisement: AdvertisementProps,
+  advertisement: AdvertisementProps
 ) {
-  const [style, setStyle] = useState("");
+  const [style, setStyle] = React.useState("");
 
   useEffect(() => {
+    if (!advertisement) return;
+
     let newStyle = "";
-    if (advertisement?.colspan) {
+    if (advertisement.colspan) {
       newStyle += `col-span-${advertisement.colspan} `;
     }
-    if (advertisement?.rowspan) {
+    if (advertisement.rowspan) {
       newStyle += `row-span-${advertisement.rowspan}`;
     }
-    setStyle(newStyle.trim()); // trim to remove trailing space if exists
+    setStyle(newStyle.trim()); // Trim to remove trailing space if existst index
   }, [advertisement]);
 
-  console.log({ style: "teszt", advertisement });
   return style;
 }

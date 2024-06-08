@@ -1,6 +1,7 @@
 "use client";
 
 import { AdvertisementProps } from "@/components/Advertisment/types";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { createStore } from "zustand/vanilla";
 
 export type AdvertisementState = {
@@ -22,7 +23,7 @@ export const defaultInitState: AdvertisementState = {
 };
 
 export const createAdvertisementStore = (
-  initState: AdvertisementState = defaultInitState,
+  initState: AdvertisementState = defaultInitState
 ) => {
   console.log({ initState });
   return createStore<AdvertisementStore>()((set) => ({
@@ -36,11 +37,11 @@ export const createAdvertisementStore = (
         advertisements: [...state.advertisements, advertisement],
       })),
     incrementAdvertisement: () => {
-      set((state) => {
-        console.log("Before increment:", state.nextAdvertisment);
+      set((prev) => {
+        console.log("Before increment:", prev.nextAdvertisment);
         const nextState = {
-          ...state,
-          nextAdvertisment: ++state.nextAdvertisment,
+          ...prev,
+          nextAdvertisment: ++prev.nextAdvertisment,
         };
         console.log("After increment:", nextState.nextAdvertisment);
         return nextState;
