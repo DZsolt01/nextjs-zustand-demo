@@ -19,8 +19,8 @@ const Advertisement = ({ index }: { index: number }) => {
   const { advertisements, nextAdvertisment, incrementAdvertisement } =
     useAdvertisementStore((state) => state);
 
-  // The index must be changed to nextAdvertisment
-  const style = constructStyle(advertisements[index]);
+  // You can change the nextAdvertisment to `index` if you want to see the layout idea
+  const style = constructStyle(advertisements[nextAdvertisment]);
 
   useEffect(() => {
     console.log("useEffect called");
