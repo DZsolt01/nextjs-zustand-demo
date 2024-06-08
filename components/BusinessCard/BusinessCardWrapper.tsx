@@ -13,13 +13,11 @@ const BusinessCardWrapper = ({
 }) => {
   const { advertisements, nextAdvertisment, incrementAdvertisement } =
     useAdvertisementStore((state) => state);
-  const [index, setIndex] = useState(nextAdvertisment);
 
   const advertisementIndexes = useMemo(() => {
     return [3, 7];
   }, []);
   useEffect(() => {
-    setIndex((prev) => prev + 1);
     incrementAdvertisement();
   }, [advertisementIndexes, incrementAdvertisement]);
 
@@ -31,7 +29,7 @@ const BusinessCardWrapper = ({
             {advertisementIndexes.includes(mIndex) && (
               <Advertisement
                 key={`adv-${mIndex}`}
-                advertisement={advertisements[index]}
+                advertisement={advertisements[nextAdvertisment]}
               />
             )}
             <div
