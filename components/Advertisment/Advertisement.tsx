@@ -6,21 +6,11 @@ import { useEffect } from "react";
 import { AdvertisementProps } from "./types";
 
 const Advertisement = ({ index }: { index: number }) => {
-  function constructStyle(advertisement: AdvertisementProps) {
-    let style = "";
-    if (advertisement?.colspan) {
-      style += `col-span-${advertisement.colspan} `;
-    }
-    if (advertisement?.rowspan) {
-      style += `row-span-${advertisement.rowspan}`;
-    }
-    return style.trim(); // trim to remove trailing space if exists
-  }
   const { advertisements, nextAdvertisment, incrementAdvertisement } =
     useAdvertisementStore((state) => state);
 
   // You can change the nextAdvertisment to `index` if you want to see the layout idea
-  const style = constructStyle(advertisements[nextAdvertisment]);
+  const style = useAdvertisementStyle(advertisements[nextAdvertisment]);
 
   useEffect(() => {
     console.log("useEffect called");
